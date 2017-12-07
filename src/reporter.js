@@ -9,7 +9,8 @@ const START_TIME = (new Date()).toISOString();
 
 const settings = {
   verbose: false,
-  path: process.env.XUNIT_REPORT_PATH || "./mocha_report.xml"
+  path: process.env.XUNIT_REPORT_PATH || "./mocha_report.xml",
+  suiteName: process.env.XUNIT_SUITE_NAME || "Mocha Tests"
 };
 
 class Reporter {
@@ -136,7 +137,7 @@ class Reporter {
   _writeXmlReport(data) {
     const jsonReport = {
       testsuite: {
-        name: "Mocha Tests",
+        name: this.opts.settings.suiteName,
         tests: data.stats.tests,
         failures: data.stats.failures,
         errors: data.stats.failures,
