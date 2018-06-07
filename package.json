@@ -1,10 +1,10 @@
 {
   "name": "testarmada-magellan-xunit-reporter",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Magellan xUnit reporter plugin",
   "main": "index.js",
   "scripts": {
-    "test": "mocha && npm run lint && npm run coverage && npm run check-coverage",
+    "test": "npm run lint && mocha && npm run coverage && npm run check-coverage",
     "dev-test": "mocha",
     "lint": "eslint *.js src/*.js test/**",
     "coverage": "istanbul cover _mocha -- --recursive",

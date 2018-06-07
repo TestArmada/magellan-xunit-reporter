@@ -8,10 +8,10 @@ const sinon = require("sinon");
 const _opts = (opts) => {
   return _.merge({
     console: {
-      log: () => {}
+      log: () => { }
     },
     fs: {
-      writeFileSync: () => {}
+      writeFileSync: () => { }
     },
     settings: {
       verbose: true,
@@ -77,17 +77,17 @@ describe("reporter", () => {
           title: "foo"
         }
       }, {
-        addListener: (name, cb) => {
-          expect(name).to.eql("message");
-          expect(cb).to.not.be.null;
-          cb({
-            type: "worker-status",
-            passed: true,
-            status: "finished"
-          });
-          done();
-        }
-      });
+          addListener: (name, cb) => {
+            expect(name).to.eql("message");
+            expect(cb).to.not.be.null;
+            cb({
+              type: "worker-status",
+              passed: true,
+              status: "finished"
+            });
+            done();
+          }
+        });
     });
   });
 
@@ -103,22 +103,52 @@ describe("reporter", () => {
           pending: true
         }
       }, {
-        addListener: (name, cb) => {
-          expect(name).to.eql("message");
-          expect(cb).to.not.be.null;
-          cb({
-            type: "worker-status",
-            passed: true,
-            status: "finished"
-          });
-          try {
-            r.flush();
-          } catch (e) {
-            console.log(e);
+          addListener: (name, cb) => {
+            expect(name).to.eql("message");
+            expect(cb).to.not.be.null;
+            cb({
+              type: "worker-status",
+              passed: true,
+              status: "finished"
+            });
+            try {
+              r.flush();
+            } catch (e) {
+              console.log(e);
+            }
+            done();
           }
-          done();
+        });
+    });
+  });
+
+  it("should handle nightwatch case", (done) => {
+    const r = new Reporter(_opts({}));
+    r.initialize().then(() => {
+      r.listenTo("a", {
+        maxAttempts: 2,
+        attempts: 1,
+        locator: {
+          filename: "foo",
+          pending: true
         }
-      });
+      }, {
+          addListener: (name, cb) => {
+            expect(name).to.eql("message");
+            expect(cb).to.not.be.null;
+            cb({
+              type: "worker-status",
+              passed: true,
+              status: "finished"
+            });
+            try {
+              r.flush();
+            } catch (e) {
+              console.log(e);
+            }
+            done();
+          }
+        });
     });
   });
 
@@ -134,26 +164,26 @@ describe("reporter", () => {
         },
         runningTime: 100
       }, {
-        addListener: (name, cb) => {
-          expect(name).to.eql("message");
-          expect(cb).to.not.be.null;
-          cb({
-            type: "worker-status",
-            status: "weird"
-          });
-          cb({
-            type: "worker-status",
-            passed: true,
-            status: "finished"
-          });
-          try {
-            r.flush();
-          } catch (e) {
-            console.log(e);
+          addListener: (name, cb) => {
+            expect(name).to.eql("message");
+            expect(cb).to.not.be.null;
+            cb({
+              type: "worker-status",
+              status: "weird"
+            });
+            cb({
+              type: "worker-status",
+              passed: true,
+              status: "finished"
+            });
+            try {
+              r.flush();
+            } catch (e) {
+              console.log(e);
+            }
+            done();
           }
-          done();
-        }
-      });
+        });
     });
   });
 
@@ -170,22 +200,22 @@ describe("reporter", () => {
         stdout: "",
         runningTime: 100
       }, {
-        addListener: (name, cb) => {
-          expect(name).to.eql("message");
-          expect(cb).to.not.be.null;
-          cb({
-            type: "worker-status",
-            passed: false,
-            status: "finished"
-          });
-          try {
-            r.flush();
-          } catch (e) {
-            console.log(e);
+          addListener: (name, cb) => {
+            expect(name).to.eql("message");
+            expect(cb).to.not.be.null;
+            cb({
+              type: "worker-status",
+              passed: false,
+              status: "finished"
+            });
+            try {
+              r.flush();
+            } catch (e) {
+              console.log(e);
+            }
+            done();
           }
-          done();
-        }
-      });
+        });
     });
   });
 });

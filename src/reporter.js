@@ -72,6 +72,13 @@ class Reporter {
       duration: test.runningTime,
       err: {}
     };
+
+    if (test.locator.filename) {
+      // patch for nightwatch test
+      testObject.title = test.locator.filename;
+      testObject.fullTitle = test.locator.filename;
+    }
+
     this.tests.push(testObject);
     this.suites.push(test.locator.filename);
     if (msg.passed) {
