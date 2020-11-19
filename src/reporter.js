@@ -94,7 +94,9 @@ class Reporter {
     } else {
       this.stats.failures = this.stats.failures + 1;
       // record err message & stack trace into report
+
       try {
+        /*eslint no-control-regex:0*/
         let s = test.stdout.replace(
           /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
           "");
