@@ -1,3 +1,7 @@
+# :warning::warning: DEPRECATED :warning::warning:
+
+This project, and it's related TestArmada projects, will no longer be supported. No further work from the owners will be done, and no PRs will be reviewed.
+
 # Magellan xUnit Reporter Plugin
 
 [![Codecov](https://img.shields.io/codecov/c/github/TestArmada/magellan-xunit-reporter.svg)]()
